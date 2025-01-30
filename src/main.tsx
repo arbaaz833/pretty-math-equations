@@ -1,14 +1,25 @@
 import "@/lib/styles/global.css";
-import React from "react";
+import { MathJaxContext } from "better-react-mathjax";
 import ReactDOM from "react-dom/client";
 import { Provider } from "react-redux";
 import { store } from "./lib/redux/store";
 import Router from "./lib/router/router";
 
+const config = {
+  "fast-preview": {
+    disabled: true,
+  },
+  tex: {
+    inlineMath: [["$", "$"]],
+    displayMath: [["$$", "$$"]],
+  },
+  messageStyle: "none",
+};
+
 ReactDOM.createRoot(document.getElementById("root")!).render(
-  <React.StrictMode>
-    <Provider store={store}>
+  <Provider store={store}>
+    <MathJaxContext config={config}>
       <Router />
-    </Provider>
-  </React.StrictMode>
+    </MathJaxContext>
+  </Provider>
 );

@@ -1,18 +1,14 @@
-import PageSpinner from "@/lib/components/spinner/page-spinner";
 import RootContextProvider from "@/lib/contexts/root.context";
 import AuthLayout from "@/lib/layouts/auth-layout/auth-layout";
 import DashboardLayout from "@/lib/layouts/dashboard-layout/dashboard-layout";
 import EmptyLayout from "@/lib/layouts/empty-layout";
 import { useAppDispatch } from "@/lib/redux/store";
 import { useAuth } from "@/modules/auth/hooks/auth.hooks";
-import { useRole } from "@/modules/auth/hooks/role.hooks";
 import { authActions } from "@/modules/auth/slices/auth.slice";
-import { profileActions } from "@/modules/auth/slices/profile.slice";
 import _ from "lodash";
 import React, {
   PropsWithChildren,
   ReactNode,
-  useEffect,
   useLayoutEffect,
   useState,
 } from "react";
@@ -23,6 +19,7 @@ import {
   useLocation,
   useNavigate,
 } from "react-router-dom";
+import PageSpinner from "../components/spinner/page-spinner";
 import { RouterConfig, useRouterConfig } from "./router-config";
 
 export function getRoutePath(basePath: string, currPath: string) {
@@ -60,13 +57,11 @@ const routeRenderer = (
           path={routePath}
           element={
             <AuthWrapper type={route.authType || parentConfig?.authType}>
-              <RoleCheckWrapper allowedRoles={route.allowedRoles}>
-                <LayoutWrapper
-                  type={route.layoutType || parentConfig?.layoutType}
-                >
-                  {route.component}
-                </LayoutWrapper>
-              </RoleCheckWrapper>
+              <LayoutWrapper
+                type={route.layoutType || parentConfig?.layoutType}
+              >
+                {route.component}
+              </LayoutWrapper>
             </AuthWrapper>
           }
         />
@@ -155,35 +150,6 @@ const AuthWrapper: React.FC<
       }
     }
   }, [type, authStatus, redirect]);
-
-  return isRendered ? children : <PageSpinner />;
-};
-
-const RoleCheckWrapper: React.FC<
-  PropsWithChildren & { allowedRoles: RouterConfig["allowedRoles"] }
-> = ({ children, allowedRoles }) => {
-  const [isRendered, setIsRendered] = useState(false);
-  const role = useRole();
-  const dispatch = useAppDispatch();
-  const { status: authStatus } = useAuth();
-  const navigate = useNavigate();
-
-  useEffect(() => {
-    if (authStatus === "authenticated") {
-      dispatch(profileActions.fetch());
-    }
-  }, [authStatus]);
-
-  useLayoutEffect(() => {
-    if (authStatus === "authenticated" && !role) {
-      setIsRendered(false);
-    } else if (Array.isArray(allowedRoles) && !allowedRoles.includes(role!)) {
-      navigate("/not-found");
-      setIsRendered(false);
-    } else {
-      setIsRendered(true);
-    }
-  }, [allowedRoles, role, authStatus]);
 
   return isRendered ? children : <PageSpinner />;
 };

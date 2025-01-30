@@ -1,19 +1,10 @@
-import AlertPopup from "@/lib/components/alert-popup/alert-popup";
 import { useLang, useThemeMode } from "@/lib/contexts/root.context";
 import { useAppDispatch, useAppSelector } from "@/lib/redux/store";
 import { useAuth } from "@/modules/auth/hooks/auth.hooks";
 import { authActions } from "@/modules/auth/slices/auth.slice";
 import { DownOutlined, MenuOutlined } from "@ant-design/icons";
 import { useResponsive } from "ahooks";
-import {
-  Avatar,
-  Dropdown,
-  Layout,
-  Select,
-  Space,
-  Tooltip,
-  Typography,
-} from "antd";
+import { Avatar, Dropdown, Layout, Select, Space, Tooltip } from "antd";
 import { useCallback } from "react";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
@@ -30,19 +21,10 @@ function Header() {
   const collapsed = useAppSelector((state) => state.auth.sidebarCollapsed);
   const { logout, logoutLoading } = useAuth();
   const { t } = useTranslation();
-  const profile = useAppSelector((state) => state.profile.data);
   const isDarkTheme = themeMode === "dark";
 
   const toggleCollapsed = useCallback(() => {
     dispatch(authActions.toggleSidebarCollapsed());
-  }, []);
-
-  const onLogout = useCallback(() => {
-    AlertPopup({
-      title: t("logout:title"),
-      message: t("logout:message"),
-      onOk: () => logout().unwrap().catch(console.error),
-    });
   }, []);
 
   const onSettingsClicked = useCallback(() => {
@@ -107,32 +89,28 @@ function Header() {
             </Tooltip>
           </a>
         </Dropdown>
-        {profile && (
-          <Dropdown
-            menu={{
-              items: [
-                {
-                  key: "settings",
-                  label: "Settings",
-                  onClick: onSettingsClicked,
-                },
-                {
-                  key: "logout",
-                  label: "Logout",
-                  disabled: logoutLoading,
-                  onClick: onLogout,
-                },
-              ],
-            }}
-            trigger={["click"]}
-          >
-            <Space align="center" className="cursor-pointer">
-              <Avatar src={profile.picture} />
-              <Typography.Text>{profile.name}</Typography.Text>
-              <DownOutlined />
-            </Space>
-          </Dropdown>
-        )}
+
+        <Dropdown
+          menu={{
+            items: [
+              {
+                key: "settings",
+                label: "Settings",
+              },
+              {
+                key: "logout",
+                label: "Logout",
+                disabled: logoutLoading,
+              },
+            ],
+          }}
+          trigger={["click"]}
+        >
+          <Space align="center" className="cursor-pointer">
+            <Avatar />
+            <DownOutlined />
+          </Space>
+        </Dropdown>
       </Space>
     </AntdHeader>
   );
