@@ -10,8 +10,7 @@
     "build:dev": "tsc && vite build --mode development",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview",
-    "watch:types": "tsc -w",
-    "prepare": "husky install"
+    "watch:types": "tsc -w"
   },
   "dependencies": {
     "@ant-design/colors": "^7.0.2",
