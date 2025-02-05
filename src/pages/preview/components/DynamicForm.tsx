@@ -7,7 +7,7 @@ interface Props {}
 
 export const DynamicForm: FC<Props> = ({}) => {
   const [input, setInput] = useState<{ text: string }>({
-    text: "",
+    text: "$$ax^2 + bx + c = 0$$",
   });
 
   const onValuesChange: FormProps<{ text: string }>["onValuesChange"] = (
@@ -25,6 +25,9 @@ export const DynamicForm: FC<Props> = ({}) => {
           onValuesChange={onValuesChange}
           layout="vertical"
           className="pr-4"
+          initialValues={{
+            text: "$$ax^2 + bx + c = 0$$",
+          }}
         >
           <div className="flex items-center justify-center">
             <Typography.Title level={3}>Input</Typography.Title>

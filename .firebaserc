@@ -3,14 +3,14 @@
     "applied-abbey-378009": {
       "hosting": {
         "prod": [
-          "rayon-react-starter"
+          "pretty-math-equation"
         ]
       }
     },
     "physikomatics-be": {
       "hosting": {
         "dev": [
-          "rayon-react-starter-dev"
+          "pretty-math-equation"
         ]
       }
     }

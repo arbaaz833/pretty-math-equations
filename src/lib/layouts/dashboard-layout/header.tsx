@@ -6,29 +6,21 @@ import { DownOutlined, MenuOutlined } from "@ant-design/icons";
 import { useResponsive } from "ahooks";
 import { Avatar, Dropdown, Layout, Select, Space, Tooltip } from "antd";
 import { useCallback } from "react";
-import { useTranslation } from "react-i18next";
-import { useNavigate } from "react-router-dom";
 import { Logo } from "./sidebar";
 
 const { Header: AntdHeader } = Layout;
 
 function Header() {
   const dispatch = useAppDispatch();
-  const navigate = useNavigate();
   const { themeMode, toggleThemeMode, _themeMode } = useThemeMode();
   const { translations, lang, setLang } = useLang();
   const { md } = useResponsive();
   const collapsed = useAppSelector((state) => state.auth.sidebarCollapsed);
-  const { logout, logoutLoading } = useAuth();
-  const { t } = useTranslation();
+  const { logoutLoading } = useAuth();
   const isDarkTheme = themeMode === "dark";
 
   const toggleCollapsed = useCallback(() => {
     dispatch(authActions.toggleSidebarCollapsed());
-  }, []);
-
-  const onSettingsClicked = useCallback(() => {
-    navigate("/settings");
   }, []);
 
   return (

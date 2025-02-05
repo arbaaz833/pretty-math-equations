@@ -1,5 +1,5 @@
 name: Deploy to Firebase Hosting on merge (main)
-"on":
+on:
   push:
     branches:
       - main
@@ -8,27 +8,12 @@ jobs:
     permissions: write-all
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
-        with:
-          persist-credentials: false
-
-      - name: Reconfigure git to use HTTP authentication
-        run: >
-          git config --global url."https://github.com/".insteadOf
-          ssh://git@github.com/
-
-      - uses: actions/setup-node@v4
-        with:
-          node-version: 18
-
+      - uses: actions/checkout@v2
       - run: yarn install --frozen-lockfile && npm run build:prod
-        env:
-          CI: false
-
       - uses: FirebaseExtended/action-hosting-deploy@v0
         with:
           repoToken: "${{ secrets.GITHUB_TOKEN }}"
-          firebaseServiceAccount: "${{ secrets.FIREBASE_SERVICE_ACCOUNT_PROD }}"
+          firebaseServiceAccount: "${{ secrets.FIREBASE_HOSTING_SERVICE_ACCOUNT_PROD }}"
           channelId: live
-          projectId: applied-abbey-378009
+          projectId: pretty-math-equation
           target: prod
