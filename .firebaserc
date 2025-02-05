@@ -1,15 +1,8 @@
 {
   "targets": {
-    "applied-abbey-378009": {
+    "pretty-math-equation": {
       "hosting": {
         "prod": [
-          "pretty-math-equation"
-        ]
-      }
-    },
-    "physikomatics-be": {
-      "hosting": {
-        "dev": [
           "pretty-math-equation"
         ]
       }
