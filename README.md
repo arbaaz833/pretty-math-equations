@@ -2,7 +2,7 @@
 
 📢 A **React app** that beautifully renders **complex mathematical equations** with LaTeX support! Perfect for students, educators, and math enthusiasts.  
 
-🌟 **Live Demo:** [Click here to try it out!](#) *(https://pretty-math-equation.web.app/)*  
+🌟 **Live Demo:** [Click here to try it out!](https://pretty-math-equation.web.app/)
 
 ---
 
